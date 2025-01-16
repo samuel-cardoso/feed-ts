@@ -1,19 +1,17 @@
 import styles from './Avatar.module.css'; 
-import PropTypes from 'prop-types';
+import { ImgHTMLAttributes } from 'react';
 
-Avatar.propTypes = {
-    src: PropTypes.string.isRequired,
-    hasBorder: PropTypes.bool,
-};
-
-interface AvatarProps {
+interface AvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
     hasBorder?: boolean;
-    src: string;
-    alt?: string;
 }
 
-export function Avatar({ hasBorder = true, src, alt  }: AvatarProps) {
+export function Avatar({ hasBorder = true, ...props }: AvatarProps) {
+    // hasBorder = true, ...props -> aqui eu tenho todas as props menos a hasBorder, pois estou tirando a hasBorder do props e o que sobra eu coloco no ...props. "...props" esses 3 pontos constituem o rest operator. 
+    console.log(props)
+
     return(
-        <img className={hasBorder ? styles.avatarWithBorder : styles.avatar} src={src} alt={alt} />
+        <img className={hasBorder ? styles.avatarWithBorder : styles.avatar} 
+        {...props} // Este é o spread operator. Ele pega todas as propriedades que eu passei para o componente Avatar e passa para o elemento img como uma propriedade.
+        />
     );
 }  
